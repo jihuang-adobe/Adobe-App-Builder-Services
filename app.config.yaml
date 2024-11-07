@@ -1,0 +1,17 @@
+application:
+  actions: actions
+  runtimeManifest:
+    packages:
+      web-services-dell:
+        license: Apache-2.0
+        actions:
+          file-name-to-metadata:
+            function: actions/dell/index.js
+            web: 'yes'
+            runtime: nodejs:18
+            inputs:
+              AEM_URL: $DELL_AEM_URL
+              AEM_CREDENTIAL: $DELL_AEM_CREDENTIAL
+              AEM_ASSET_API_FIXED_PATH: $DELL_AEM_ASSET_API_FIXED_PATH
+            annotations:
+              require-adobe-auth: false
