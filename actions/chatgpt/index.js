@@ -1,10 +1,14 @@
 'use strict'
 
 async function main (params) {
-  const responseHeaders = {
+  const preflightHeaders = {
     'Access-Control-Allow-Origin': params.__ow_headers.origin,
     'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Methods': 'OPTIONS, GET, POST',
+    'Access-Control-Allow-Methods': 'OPTIONS, GET, DELETE',
+    'Content-Type': 'application/json'
+  };
+
+  const responseHeaders = {
     'Content-Type': 'application/json'
   };
 
@@ -12,11 +16,9 @@ async function main (params) {
   if (params.__ow_method.toLowerCase() == "options") {
     return {
       statusCode: 200,
-      headers: responseHeaders
+      headers: preflightHeaders
     }
   }
-
-  console.log('hi');
 
   if(!params.hasOwnProperty('payload')) {
     return {
