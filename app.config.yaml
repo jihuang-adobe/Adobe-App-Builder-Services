@@ -2,6 +2,17 @@ application:
   actions: actions
   runtimeManifest:
     packages:
+      wknd-chatgpt:
+        license: Apache-2.0
+        actions:
+          chat:
+            function: actions/chatgpt/index.js
+            web: 'yes'
+            runtime: nodejs:18
+            inputs:
+              CHATGPT_SECRET_KEY: $CHATGPT_SECRET_KEY
+            annotations:
+              require-adobe-auth: false    
       web-services-dell:
         license: Apache-2.0
         actions:
