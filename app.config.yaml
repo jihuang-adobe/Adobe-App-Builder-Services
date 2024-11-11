@@ -38,5 +38,6 @@ application:
               AEM_URL: $DELL_AEM_URL
               AEM_CREDENTIAL: $DELL_AEM_CREDENTIAL
               AEM_ASSET_API_FIXED_PATH: $DELL_AEM_ASSET_API_FIXED_PATH
+              AEM_QUERY_BUILDER_API_FIXED_PATH: $DELL_QUERY_BUILDER_API_FIXED_PATH
             annotations:
               require-adobe-auth: false

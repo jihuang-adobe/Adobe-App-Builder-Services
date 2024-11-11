@@ -26,9 +26,7 @@ async function main (params) {
   const ret = await assetAPIObj.setAssetMetadata(
     payloadPath,
     'contentOwner',
-    `File Name: ${fileName}
-    Smart Tags: ${smartTagsArray.join(', ')}
-    `
+    'File Name: ' + fileName + '\r\n\r\n' + 'Smart Tags: ' + smartTagsArray.join(', ')
   );
 
   //console.log(fileName);
