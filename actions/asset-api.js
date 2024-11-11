@@ -3,26 +3,25 @@ const path = require('path');
 class AssetAPI {
   constructor(AEM_URL, AEM_CREDENTIAL, AEM_ASSET_API_FIXED_PATH) {
     this.AEM_URL = AEM_URL;
-    this.AEM_CREDENTIAL = AEM_CREDENTIAL;
-    this.AEM_BASIC_AUTH = 'Basic ' + btoa(this.AEM_CREDENTIAL);
     this.AEM_ASSET_API_FIXED_PATH = AEM_ASSET_API_FIXED_PATH;
     this.AEM_HEADERS = {
       'Content-Type': 'application/json',
-      'Authorization': this.AEM_BASIC_AUTH
+      'Authorization': 'Basic ' + btoa(AEM_CREDENTIAL)
     }
   }
 
+  getAEMAssetAPIFullPath(assetPath) {
+    return this.AEM_URL + assetPath.replace('/content/dam', this.AEM_ASSET_API_FIXED_PATH);
+  }
+
   async getAssetJson(assetPath) { 
-    const AEM_ASSET_API_FULL_PATH = this.AEM_URL + assetPath.replace('/content/dam', this.AEM_ASSET_API_FIXED_PATH) + '.json';
-    
-    const res = await fetch(AEM_ASSET_API_FULL_PATH, { method: 'GET', headers: this.AEM_HEADERS});
+    const res = await fetch(this.getAEMAssetAPIFullPath(assetPath) + '.json', { method: 'GET', headers: this.AEM_HEADERS});
     const resJson = await res.json();
 
     return resJson;
   }
 
-  async setAssetMetadata(assetPath, metadataName, metadataValue) { 
-    const AEM_ASSET_API_FULL_PATH = this.AEM_URL + assetPath.replace('/content/dam', this.AEM_ASSET_API_FIXED_PATH);
+  async setAssetMetadata(assetPath, metadataName, metadataValue) {
     const body = {
       class: 'asset',
       properties: {
@@ -32,7 +31,7 @@ class AssetAPI {
     
     body.properties.metadata[metadataName] = metadataValue;
     
-    const res = await fetch(AEM_ASSET_API_FULL_PATH, { method: 'PUT', headers: this.AEM_HEADERS, body: JSON.stringify(body)});
+    const res = await fetch(this.getAEMAssetAPIFullPath(assetPath), { method: 'PUT', headers: this.AEM_HEADERS, body: JSON.stringify(body)});
     const resJson = await res.json();
     
     return resJson;
