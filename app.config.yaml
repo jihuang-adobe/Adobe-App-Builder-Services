@@ -27,6 +27,17 @@ application:
               AEM_QUERY_BUILDER_API_FIXED_PATH: $DEV_QUERY_BUILDER_API_FIXED_PATH
             annotations:
               require-adobe-auth: false
+          metadata-mapping:
+            function: actions/dev/metadata-mapping.js
+            web: 'yes'
+            runtime: nodejs:18
+            inputs:
+              AEM_CREDENTIAL: $DEV_AEM_CREDENTIAL
+              AEM_ASSET_API_FIXED_PATH: $DEV_AEM_ASSET_API_FIXED_PATH
+              AEM_QUERY_BUILDER_API_FIXED_PATH: $DEV_QUERY_BUILDER_API_FIXED_PATH
+              META_DATA_MAP_SOURCE: $DEV_META_DATA_MAP_SOURCE
+            annotations:
+              require-adobe-auth: false
       web-services-dell:
         license: Apache-2.0
         actions:
