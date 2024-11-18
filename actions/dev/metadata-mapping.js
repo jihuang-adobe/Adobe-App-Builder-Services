@@ -4,6 +4,8 @@ const AssetAPI = require('../asset-api');
 const EDSSheetAPI = require('../eds-sheet-api');
 
 async function main (params) {
+  //console.log(params);
+
   if(!params.hasOwnProperty('payloadPath')) {
     return {
       statusCode: 400,
@@ -11,16 +13,22 @@ async function main (params) {
     }
   }
 
-  if(!params.__ow_headers.hasOwnProperty('referer')) {
-    return {
-      statusCode: 400,
-      body: 'missing referer in request header'
-    }
+  var AEM_URL;
+
+  if(params.hasOwnProperty('origin')) {
+    AEM_URL = params.origin;
+  }
+  
+  if(params.__ow_headers.hasOwnProperty('origin')) {
+    AEM_URL = params.__ow_headers.origin;
   }
 
-  console.log(params);
-
-  const AEM_URL = params.__ow_headers.origin;
+  if(!AEM_URL) {
+    return {
+      statusCode: 400,
+      body: 'missing origin in url parameter or header'
+    }
+  }
 
   // remove extra path if this is AEM Launcher initiated on asset metadata change
   const payloadPath = params.payloadPath.replace('/jcr:content/metadata', '');
